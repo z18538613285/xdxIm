@@ -1,4 +1,4 @@
-package com.xdx97.socket.controller;
+package com.xdx97.socket.websocket;
 
 import com.xdx97.socket.bean.MsgInfo;
 import com.xdx97.socket.bean.SessionList;
@@ -66,6 +66,16 @@ public class WebSocket {
     public void onMessage(String message) {
 
         String sessionId = this.session.getRequestParameterMap().get("sessionId").get(0);
+
+        sendMessage(message, sessionId);
+    }
+
+    /**
+     *
+     * @param message
+     * @param sessionId
+     */
+    public void sendMessage(String message, String sessionId) {
         if (sessionId == null){
             System.out.println("sessionId 错误");
         }
@@ -92,7 +102,7 @@ public class WebSocket {
         // 消息持久化
         msgInfoMapper.insert(msgInfo);
 
-        // 判断用户是否存在，不存在就结束
+        // 判断用户是否存在(上线)，不存在就结束
         List<Object> list = CurPool.sessionPool.get(sessionList.getToUserId());
         if (list == null || list.isEmpty()){
             // 用户不存在，更新未读数
@@ -123,7 +133,7 @@ public class WebSocket {
                 sendTextMessage(sessionList.getToUserId() ,JsonUtils.objectToJson(sessionLists));
             }
         }
-        System.out.println("【websocket消息】收到客户端消息:"+message);
+        System.out.println("【websocket消息】收到客户端消息:"+ message);
     }
 
     // 此为广播消息

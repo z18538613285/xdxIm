@@ -3,8 +3,10 @@ package com.xdx97.socket.controller;
 import com.xdx97.socket.bean.MsgInfo;
 import com.xdx97.socket.bean.SessionList;
 import com.xdx97.socket.common.bean.AjaxResult;
+import com.xdx97.socket.common.utils.CurPool;
 import com.xdx97.socket.mapper.MsgInfoMapper;
 import com.xdx97.socket.mapper.SeesionListMapper;
+import com.xdx97.socket.websocket.WebSocket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,9 @@ import java.util.List;
 
 @RestController
 public class MsgInfoController {
+
+    @Autowired
+    private WebSocket webSocket;
 
     @Autowired
     private MsgInfoMapper msgInfoMapper;
@@ -38,5 +43,13 @@ public class MsgInfoController {
         return AjaxResult.success(msgInfoList);
     }
 
+    // 消息列表
+    @GetMapping("/msgSend")
+    public AjaxResult<?> msgList(@RequestParam String message, @RequestParam String sessionId) {
+        webSocket.sendMessage(message,sessionId);
+        return AjaxResult.success("发送成功");
 
-}
+    }
+
+
+    }

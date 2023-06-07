@@ -1,4 +1,4 @@
-package com.xdx97.socket;
+package com.xdx97.socket.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

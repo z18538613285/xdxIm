@@ -1,7 +1,7 @@
 package com.xdx97.socket.common.utils;
 
 import com.xdx97.socket.bean.User;
-import com.xdx97.socket.controller.WebSocket;
+import com.xdx97.socket.websocket.WebSocket;
 
 import java.util.List;
 import java.util.Map;
